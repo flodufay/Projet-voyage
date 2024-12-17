@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class reservations {
+public class table {
 
     // Attritbuts
 	//DB connection details
