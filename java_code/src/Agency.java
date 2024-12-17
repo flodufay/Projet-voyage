@@ -1,5 +1,5 @@
 
-public class agency{
+public class Agency{
 	
 	public static void main(String[] args) {
 		System.out.println("What would you like to do?");

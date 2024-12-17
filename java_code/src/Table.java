@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class table {
+public class Table {
 
     // Attritbuts
 	//DB connection details
@@ -31,13 +31,13 @@ public class table {
     	
     	String sqlValues = "'" + values[0]+ "'";
     	
-    	for (int i = 1; i<values.length, i++) {
+    	for (int i = 1; i<values.length; i++) {
     		sqlValues = sqlValues + "," + "'" + values[i]+ "'";
     	}
     	
     	String sqlNames=nameColumns[0];
     	
-    	for (int i = 1; i<nameColumns.length, i++) {
+    	for (int i = 1; i<nameColumns.length; i++) {
     		sqlNames = sqlNames + "," + nameColumns[i];
     	}
     	
@@ -45,7 +45,7 @@ public class table {
         
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-             System.out.println("Added passenger succesfully.");
+             System.out.println("Added " + nameTable + " succesfully.");
              connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class table {
     	String query = "DELETE FROM " + nameTable + " WHERE " + namePrimeKey +" = " + "'" + id+ "'";
     	try (Connection conn = getConnection();
     		PreparedStatement stmt = conn.prepareStatement(query)) {
-            System.out.println("Deleted reservation succesfully");
+            System.out.println("Deleted " + nameTable + " succesfully");
             connection.close();
     	} catch (SQLException e) {
     		e.printStackTrace();
@@ -67,7 +67,7 @@ public class table {
 
     // Display all method 
     public static void displayAll() {
-        String query = "SELECT * FROM " + tablename;
+        String query = "SELECT * FROM " + nameTable;
         
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -77,15 +77,15 @@ public class table {
             //Display tablehead:
             String tableNames=nameColumns[0];
         	
-        	for (int i = 1; i<nameColumns.length, i++) {
+        	for (int i = 1; i<nameColumns.length; i++) {
         		tableNames = tableNames + "/" + nameColumns[i];
         	}
         	System.out.println(tableNames);
-        	System.out.println("---------------------------------")
+        	System.out.println("---------------------------------");
         	
             while (rs.next()) {
             	String line=rs.getString(nameColumns[0]);
-            	for (int i=1; i<nameColumns.length, i++) {
+            	for (int i=1; i<nameColumns.length; i++) {
             		line = line + "\t" + rs.getString(nameColumns[i]);
             	}
                 System.out.println(line);
@@ -99,7 +99,7 @@ public class table {
     
     //Display by primeKey
     public static void displayByPrimeKey(int id) {
-        String query = "SELECT * FROM " + tablename + "WHERE " + primeKey " = " + "'" + id+ "'";
+        String query = "SELECT * FROM " + nameTable + "WHERE " + namePrimeKey + " = " + "'" + id+ "'";
         
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -109,15 +109,15 @@ public class table {
             //Display tablehead:
             String tableNames=nameColumns[0];
         	
-        	for (int i = 1; i<nameColumns.length, i++) {
+        	for (int i = 1; i<nameColumns.length; i++) {
         		tableNames = tableNames + "/" + nameColumns[i];
         	}
         	System.out.println(tableNames);
-        	System.out.println("---------------------------------")
+        	System.out.println("---------------------------------");
         	
             while (rs.next()) {
             	String line=rs.getString(nameColumns[0]);
-            	for (int i=1; i<nameColumns.length, i++) {
+            	for (int i=1; i<nameColumns.length; i++) {
             		line = line + "\t" + rs.getString(nameColumns[i]);
             	}
                 System.out.println(line);
@@ -128,22 +128,19 @@ public class table {
     }
     
     //modify method
-    public static void modify() {
-
-    }
+    public static void modify(int id, String column, String newValue ) {
+    	String query = "UPDATE " + nameTable + "SET "+ column + " = " + "'" + newValue + "'" + "WHERE " + namePrimeKey + " = " + "'" + id+ "'";
+        
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+                System.out.println(nameTable + "modified succesfully.");
+                connection.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+       }
 
     // Main-Methode for tests
     public static void main(String[] args) {
-        // Add passenger example
-        addPassenger("Max", "Mustermann", Date.valueOf("1985-06-15"));
-        addPassenger("Anna", "Müller", Date.valueOf("1990-11-22"));
-        
-        // create reservation example
-        createReservation(1, "XY123", Date.valueOf("2024-12-20"));
-        createReservation(2, "AB456", Date.valueOf("2024-12-21"));
-        
-        // display passenger and reservation information
-        displayPassenger(1);
-        displayReservations(1);
     }
 }
