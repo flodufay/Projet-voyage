@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    volumes:
+      - /home/dufay/Projet-voyage/mariadb:/var/lib/mysql
+    environment:
+      TZ: Europe/Paris
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
+      MYSQL_ROOT_PASSWORD: projet
+      MYSQL_USER: projet
+      MYSQL_PASSWORD: projet
+      MYSQL_DATABASE: projet
+    ports:
+    - "3306:3306"
+    restart: unless-stopped
