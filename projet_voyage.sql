@@ -16,10 +16,9 @@ CREATE TABLE IF NOT EXISTS `client` (
 -- Contenu de la table `client`
 -- -------------------------------
 
-INSERT INTO `client` (`id_client`, `nom`, `prenom`, `num_telephone`, `mail`, `date_naissance`) VALUES
-(1, 'HEURTEL', 'Olivier', '0687731346', 'o.heurtel@gmail.com', '1985-07-22'),
-(2, 'THIBAUD', 'Cyril', '0203040506', NULL, '2000-04-10'),
-(3, 'GUERIN', 'Brice-Arnaud', '0304050607', 'barnaud.guerin@outlook.com', '1967-10-30');
+INSERT INTO `client` (`nom`, `prenom`, `num_telephone`, `mail`, `date_naissance`) VALUES('HEURTEL', 'Olivier', 0687731346, 'o.heurtel@gmail.com', '1985-07-22'),
+('THIBAUD', 'Cyril', 0203040506, NULL, '2000-04-10'),
+('GUERIN', 'Brice-Arnaud', 0304050607, 'barnaud.guerin@outlook.com', '1967-10-30');
 
 -- -------------------------------
 -- Structure de la table `vol`
@@ -58,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `compagnie` (
 -- Contenu de la table `compagnie`
 -- -------------------------------
 
-INSERT INTO `compagnie` (`id_compagnie`, `nom_compagnie`) VALUES
-(1, 'EASYJET'),
-(2, 'RYANAIR');
+INSERT INTO `compagnie` (`nom_compagnie`) VALUES
+('EASYJET'),
+('RYANAIR');
 
 -- -------------------------------
 -- Structure de la table `reservation`
@@ -76,18 +75,15 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 	`type_paiement` varchar(2) NOT NULL,
 	`date_paiement` DATE,
 	`annulation_possible` TINYINT(1),
-	PRIMARY KEY (`id_reservation`),
-	UNIQUE KEY `id_client` (`id_client`),
-	UNIQUE KEY `id_reservataire` (`id_reservataire`),
-	UNIQUE KEY `id_conseiller` (`id_conseiller`),
-	UNIQUE KEY `num_vol` (`num_vol`)
+	PRIMARY KEY (`id_reservation`)
 );
 
 -- -------------------------------
 -- Contenu de la table `reservation`
 -- -------------------------------
 
-INSERT INTO `reservation` (`id_reservation`, `id_client`, `id_reservataire`, `id_conseiller`, `num_vol`, `type_vol`, `type_paiement`, `date_paiement`, `annulation_possible`) VALUES 
-(1, 1, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
-(2, 2, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
-(3, 3, 3, 2, 'GSX130', 'Economy', 'CB', '2024-07-03', '0');
+INSERT INTO `reservation` (`id_client`, `id_reservataire`, `id_conseiller`, `num_vol`, `type_vol`, `type_paiement`, `date_paiement`, `annulation_possible`) VALUES 
+(1, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
+(2, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
+(3, 3, 2, 'GSX130', 'Economy', 'CB', '2024-07-03', '0');
+
