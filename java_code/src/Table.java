@@ -5,29 +5,29 @@ public class Table {
     // Attritbuts
 	//DB connection details
 	private static final String hostName ="localhost";
-	private static final String port ="8584";
-    private static final String URL = "jdbc :mysql://"+hostName+":" + port;
-    private static final String USER = "root";
-    private static final String PASSWORD = "motdepasse";
+	private static final String port ="3306";
+    private static final String URL = "jdbc:mysql://"+hostName + ":" + port + "/projet";
+    private static final String USER = "projet";
+    private static final String PASSWORD = "projet";
 
     private static Connection connection;
 
     
-    //Attributs specific for the table
-    private static String nameTable;
-    private static String[] nameColumns;
-    private static String namePrimeKey;
-    
     // method for the connection
     public static Connection getConnection() throws SQLException {
-        if (connection == null) {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        }
+        try {
+        	String unicode="?useSSL=false&autoReconnect=true&useUnicode=yes&characterEncoding=UTF-8";
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(URL + unicode, USER, PASSWORD);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return connection;
     }
 
     // add method
-    public static void add(String[] values) {
+    public static void add(String nameTable,  String[] nameColumns, String namePrimeKey, String[] values) {
     	
     	String sqlValues = "'" + values[0]+ "'";
     	
@@ -44,20 +44,23 @@ public class Table {
         String query = "INSERT INTO "+ nameTable +" ( " + sqlNames +" ) VALUES (" + sqlValues + " )";
         
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-             System.out.println("Added " + nameTable + " succesfully.");
-             connection.close();
+        	PreparedStatement stmt = conn.prepareStatement(query)) {
+        	stmt.executeUpdate();
+
+            System.out.println("Added " + nameTable + " succesfully.");
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
     //delete method
-    public static void delete(int id) {
+    public static void delete(String nameTable,  String[] nameColumns, String namePrimeKey, int id) {
     	 
     	String query = "DELETE FROM " + nameTable + " WHERE " + namePrimeKey +" = " + "'" + id+ "'";
     	try (Connection conn = getConnection();
     		PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.executeUpdate();
             System.out.println("Deleted " + nameTable + " succesfully");
             connection.close();
     	} catch (SQLException e) {
@@ -66,9 +69,9 @@ public class Table {
     }
 
     // Display all method 
-    public static void displayAll() {
+    public static void displayAll(String nameTable,  String[] nameColumns, String namePrimeKey) {
         String query = "SELECT * FROM " + nameTable;
-        
+                
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
             
@@ -98,9 +101,9 @@ public class Table {
     
     
     //Display by primeKey
-    public static void displayByPrimeKey(int id) {
-        String query = "SELECT * FROM " + nameTable + "WHERE " + namePrimeKey + " = " + "'" + id+ "'";
-        
+    public static void displayByPrimeKey(String nameTable,  String[] nameColumns, String namePrimeKey, int id) {
+        String query = "SELECT * FROM " + nameTable + " WHERE " + namePrimeKey + " = " + id;
+    	
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
             
@@ -128,12 +131,14 @@ public class Table {
     }
     
     //modify method
-    public static void modify(int id, String column, String newValue ) {
-    	String query = "UPDATE " + nameTable + "SET "+ column + " = " + "'" + newValue + "'" + "WHERE " + namePrimeKey + " = " + "'" + id+ "'";
-        
+    public static void modify(String nameTable,  String[] nameColumns, String namePrimeKey, int id, String column, String newValue ) {
+    	String query = "UPDATE " + nameTable + " SET "+ column + " = " + "'" + newValue + "'" + "WHERE " + namePrimeKey + " = " + "'" + id+ "'";
+
         try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
-                System.out.println(nameTable + "modified succesfully.");
+        		stmt.executeUpdate();
+
+                System.out.println(nameTable + " modified succesfully.");
                 connection.close();
            } catch (SQLException e) {
                e.printStackTrace();

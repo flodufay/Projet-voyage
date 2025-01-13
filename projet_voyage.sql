@@ -25,7 +25,7 @@ INSERT INTO `client` (`nom`, `prenom`, `num_telephone`, `mail`, `date_naissance`
 -- -------------------------------
 
 CREATE TABLE IF NOT EXISTS `vol` (
-	`num_vol` varchar(25) NOT NULL,
+	`num_vol` int(11) NOT NULL auto_increment,
 	`id_compagnie` int(11) NOT NULL,
 	`date_heure_depart` DATETIME NOT NULL,
 	`lieu_depart` varchar(25) NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `vol` (
 -- -------------------------------
 
 INSERT INTO `vol` (`num_vol`, `id_compagnie`, `date_heure_depart`, `lieu_depart`, `date_heure_arrivee`, `lieu_arrivee`) VALUES
-('JFX204', '1', '2024-12-27 16:52', 'VIENNA', '2024-12-27 21:03', 'MADRID'),
-('GSX130', '2', '2024-08-10 10:02', 'PARIS', '2024-08-10 11:03', 'LONDON');
+('1', '1', '2024-12-27 16:52', 'VIENNA', '2024-12-27 21:03', 'MADRID'),
+('2', '2', '2024-08-10 10:02', 'PARIS', '2024-08-10 11:03', 'LONDON');
 
 -- -------------------------------
 -- Structure de la table `compagnie`
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 	`id_client` int(11) NOT NULL,
 	`id_reservataire` int(11) NOT NULL,
 	`id_conseiller` int(11) NOT NULL,
-	`num_vol` varchar(25) NOT NULL,
+	`num_vol` int(11) NOT NULL,
 	`type_vol` varchar(25) NOT NULL,
 	`type_paiement` varchar(2) NOT NULL,
 	`date_paiement` DATE,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 -- -------------------------------
 
 INSERT INTO `reservation` (`id_client`, `id_reservataire`, `id_conseiller`, `num_vol`, `type_vol`, `type_paiement`, `date_paiement`, `annulation_possible`) VALUES 
-(1, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
-(2, 1, 1, 'JFX204', 'Business', 'CB', '2024-06-27', '1'),
-(3, 3, 2, 'GSX130', 'Economy', 'CB', '2024-07-03', '0');
+(1, 1, 1, '1', 'Business', 'CB', '2024-06-27', '1'),
+(2, 1, 1, '1', 'Business', 'CB', '2024-06-27', '1'),
+(3, 3, 2, '2', 'Economy', 'CB', '2024-07-03', '0');
 
