@@ -6,7 +6,7 @@ public class Vol extends Table {
     
     //Attribut specific for the table
     private static String nameTable = "vol";
-    private static String[] nameColumns = {"num_vol", "id_compagnie", "date_heure_depart", "lieu_depart", "date_heure_arrivee", "lieu_arrivee"};
+    private static String[] nameColumns = {"id_compagnie", "date_heure_depart", "lieu_depart", "date_heure_arrivee", "lieu_arrivee"};
     private static String namePrimeKey = "num_vol";
     
     //override of method add
@@ -41,11 +41,11 @@ public class Vol extends Table {
     	displayAll();
     	add(values_vol);
     	displayAll();
-    	displayByPrimeKey(5);
-    	modify(5, "id_compagnie", "20");
+    	displayByPrimeKey(3);
+    	modify(3, "id_compagnie", "20");
     	displayAll();
-    	displayByPrimeKey(5);
-    	delete(5);
+    	displayByPrimeKey(3);
+    	delete(3);
     	displayAll();
     }
 }

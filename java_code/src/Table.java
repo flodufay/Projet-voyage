@@ -42,7 +42,7 @@ public class Table {
     	}
     	
         String query = "INSERT INTO "+ nameTable +" ( " + sqlNames +" ) VALUES (" + sqlValues + " )";
-        
+
         try (Connection conn = getConnection();
         	PreparedStatement stmt = conn.prepareStatement(query)) {
         	stmt.executeUpdate();

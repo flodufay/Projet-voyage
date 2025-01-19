@@ -4,7 +4,7 @@ public class Client extends Table {
 	
     //Attribut specific for the table
     private static final String nameTable = "client";
-    private static final String[] nameColumns = {"id_client", "nom", "prenom", "num_telephone", "mail", "date_naissance"};
+    private static final String[] nameColumns = {"nom", "prenom", "num_telephone", "mail", "date_naissance"};
     private static final String namePrimeKey = "id_client";
 
     //override of method add
@@ -35,15 +35,15 @@ public class Client extends Table {
     
     // Main-Methode for tests
     public static void main(String[] args) {
-    	String[] values_client = {"5", "Paul", "Jean", "0783782361", "mail@mail.com", "1985-07-22"};
+    	String[] values_client = {"Paul", "Jean", "0783782361", "mail@mail.com", "1985-07-22"};
     	displayAll();
     	add(values_client);
     	displayAll();
-    	displayByPrimeKey(5);
-    	modify(5, "nom", "Sebastien");
+    	displayByPrimeKey(4);
+    	modify(4, "nom", "Sebastien");
     	displayAll();
-    	displayByPrimeKey(5);
-    	delete(5);
+    	displayByPrimeKey(4);
+    	delete(4);
     	displayAll();
     }
 }
